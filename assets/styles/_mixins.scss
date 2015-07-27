@@ -1,0 +1,11 @@
+.user-select {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+}
+
+.shadow-box {
+    -webkit-box-shadow: 0 0 20px rgba(100,100,100,0.2);
+    box-shadow: 0 0 5px rgba(100,100,100,0.2);
+}

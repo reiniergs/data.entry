@@ -1,0 +1,154 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">New Purchase Order</h3>
+    </div>
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <div class="date-container">
+                    <label for="order-date">Date</label>
+                    <div class="app-datepicker">
+                        <input type="text" class="form-control" id="order-date">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+                <div class="site-container">
+                    <label for="order-site">Site:</label>
+                    <select id="order-site" class="site-select">
+                        <option>Publix</option>
+                        <option>Startbucks</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="order-note">PO Note:</label>
+                <textarea id="order-note" class="form-control" rows="3"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="summary-container">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <b>Site total budget:</b>
+                <span class="right">$4,000</span>
+            </li>
+            <li class="list-group-item">
+                <b>Site budget available :</b>
+                <span class="right">$4,000</span>
+            </li>
+            <li class="list-group-item">
+                <b>Overbudget amount:</b>
+                <span class="right">$4,000</span>
+            </li>
+        </ul>
+    </div>
+    <div class="toolbar">
+        <div class="right">
+            <b>Grand Total:</b> $2,000
+        </div>
+        <div class="form-group">
+            <div class="filter-container">
+                <input type="text" class="form-control" id="filter-top" placeholder="type to filter">
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td><b>Line #</b></td>
+                <td><b>Item number</b></td>
+                <td><b>Item description</b></td>
+                <td><b>UofM</b></td>
+                <td><b>Qty</b></td>
+                <td><b>Unit price</b></td>
+                <td><b>Extended price</b></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>BUS250</td>
+                <td>Tim L. Conley TSC Appply Online 250 pk</td>
+                <td>
+                    <select>
+                        <option>EA</option>
+                        <option>Other</option>
+                    </select>
+                </td>
+                <td>Component</td>
+                <td>$ 45.00</td>
+                <td>0.00</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>BUS250</td>
+                <td>Tim L. Conley TSC Appply Online 250 pk</td>
+                <td>
+                    <select>
+                        <option>EA</option>
+                        <option>Other</option>
+                    </select>
+                </td>
+                <td>Component</td>
+                <td>$ 45.00</td>
+                <td>0.00</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>BUS250</td>
+                <td>Tim L. Conley TSC Appply Online 250 pk</td>
+                <td>
+                    <select>
+                        <option>EA</option>
+                        <option>Other</option>
+                    </select>
+                </td>
+                <td>Component</td>
+                <td>$ 45.00</td>
+                <td>0.00</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="toolbar">
+        <div class="right">
+            <b>Grand Total:</b> $2,000
+        </div>
+        <div>
+            <!-- Standard button -->
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                Add more items
+            </button>
+        </div>
+    </div>
+    <hr style="clear : both; margin-top: 15px"/>
+    <div class="btn-container">
+        <!-- Standard button -->
+        <button type="button" class="btn btn-default">Save</button>
+
+        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+        <button type="button" class="btn btn-primary">Save & Continue</button>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add new item</h4>
+            </div>
+            <div class="modal-body">
+                add more items form, under construction 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

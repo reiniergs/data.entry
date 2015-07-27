@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data entry</title>
+    <link rel="stylesheet" href="assets/styles/vendor/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="assets/styles/main.css"/>
+    <script src="assets/js/app.js"></script>
+</head>
+<body>
+   <div class="app-container">
+       <h1>Data entry [Manage orders]</h1>
+       <div id="manage-order-container"></div>
+   </div>
+</body>
+<script>
+    window.onload = function () {
+        var App = new DATA_ENTRY({
+            el : document.getElementById('manage-order-container')
+        });
+        App.render();
+    }
+</script>
+</html>

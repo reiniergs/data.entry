@@ -1,4 +1,5 @@
 var $ = require('jquery');
+        require('./jquery.plugins/qty');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var datepicker = require('../vendor/bootstrap-datepicker/js/bootstrap-datepicker');
@@ -14,6 +15,9 @@ var manageOrderView = Backbone.View.extend({
     },
     render : function () {
         this.$el.html(template({ name : 'Saray'}));
+        this.$('.qty-comp').qty({
+            initValue : 10
+        })
         this.trigger('rendered');
         return this;
     },

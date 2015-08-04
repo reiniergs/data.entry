@@ -1,6 +1,9 @@
 
 @import "../fonts/font-awesome/scss/font-awesome";
 @import "vendor/bootstrap-datepicker.css";
+@import "mixins";
+@import "components/lightbox";
+@import "components/qty";
 
 .app-container {
     width: 1200px;

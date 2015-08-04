@@ -7,6 +7,7 @@
             <div class="form-group">
                 <div class="date-container">
                     <label for="order-date">Date</label>
+
                     <div class="app-datepicker">
                         <input type="text" class="form-control" id="order-date">
                         <i class="fa fa-calendar"></i>
@@ -55,63 +56,81 @@
     </div>
     <table class="table">
         <thead>
-            <tr>
-                <td><b>Line #</b></td>
-                <td><b>Item number</b></td>
-                <td><b>Item description</b></td>
-                <td><b>UofM</b></td>
-                <td><b>Qty</b></td>
-                <td><b>Unit price</b></td>
-                <td><b>Extended price</b></td>
-                <td></td>
-            </tr>
+        <tr>
+            <td><b>Line #</b></td>
+            <td><b>Item number</b></td>
+            <td><b>Item description</b></td>
+            <td><b>UofM</b></td>
+            <td><b>Qty</b></td>
+            <td><b>Unit price</b></td>
+            <td><b>Extended price</b></td>
+            <td></td>
+        </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>BUS250</td>
-                <td>Tim L. Conley TSC Appply Online 250 pk</td>
-                <td>
-                    <select>
-                        <option>EA</option>
-                        <option>Other</option>
-                    </select>
-                </td>
-                <td>Component</td>
-                <td>$ 45.00</td>
-                <td>0.00</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>BUS250</td>
-                <td>Tim L. Conley TSC Appply Online 250 pk</td>
-                <td>
-                    <select>
-                        <option>EA</option>
-                        <option>Other</option>
-                    </select>
-                </td>
-                <td>Component</td>
-                <td>$ 45.00</td>
-                <td>0.00</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>BUS250</td>
-                <td>Tim L. Conley TSC Appply Online 250 pk</td>
-                <td>
-                    <select>
-                        <option>EA</option>
-                        <option>Other</option>
-                    </select>
-                </td>
-                <td>Component</td>
-                <td>$ 45.00</td>
-                <td>0.00</td>
-                <td></td>
-            </tr>
+        <tr>
+            <td>1</td>
+            <td>BUS250</td>
+            <td>Tim L. Conley TSC Appply Online 250 pk</td>
+            <td>
+                <select>
+                    <option>EA</option>
+                    <option>Other</option>
+                </select>
+            </td>
+            <td>
+                <div class="qty-comp">
+                    <span class="qty-decrease"></span>
+                    <span class="qty-increase"></span>
+                    <input class="qty-edit" type="text"/>
+                </div>
+            </td>
+            <td>$ 45.00</td>
+            <td>0.00</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>BUS250</td>
+            <td>Tim L. Conley TSC Appply Online 250 pk</td>
+            <td>
+                <select>
+                    <option>EA</option>
+                    <option>Other</option>
+                </select>
+            </td>
+            <td>
+                <div class="qty-comp">
+                    <span class="qty-decrease"></span>
+                    <span class="qty-increase"></span>
+                    <input class="qty-edit" type="text"/>
+                </div>
+            </td>
+            <td>$ 45.00</td>
+            <td>0.00</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>BUS250</td>
+            <td>Tim L. Conley TSC Appply Online 250 pk</td>
+            <td>
+                <select>
+                    <option>EA</option>
+                    <option>Other</option>
+                </select>
+            </td>
+            <td>
+                <div class="qty-comp">
+                    <span class="qty-decrease"></span>
+                    <span class="qty-increase"></span>
+                    <input class="qty-edit" type="text"/>
+                </div>
+            </td>
+            <td>$ 45.00</td>
+            <td>0.00</td>
+            <td></td>
+        </tr>
         </tbody>
     </table>
     <div class="toolbar">
@@ -138,17 +157,49 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add new item</h4>
-            </div>
-            <div class="modal-body">
-                add more items form, under construction 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add new item</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="item-number">Item number</label>
+                        <input type="text" class="form-control" id="item-number" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="item-number">Item description</label>
+                        <textarea type="text" class="form-control" id="item-description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-uofm">UofM</label>
+                        <select class="form-control" id="item-uofm">
+                            <option>EA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Qty</label>
+                        <div class="qty-comp">
+                            <span class="qty-decrease"></span>
+                            <span class="qty-increase"></span>
+                            <input class="qty-edit" type="text"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-price">Unit price</label>
+                        <input type="text" class="form-control" id="item-price" value="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Extended price</label>
+                        <h3 class="total-price">0.00</h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

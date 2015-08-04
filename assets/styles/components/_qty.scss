@@ -1,0 +1,41 @@
+.qty-comp {
+    border : 1px solid #ccc;
+    border-radius: 3px;
+    width : 100px;
+    height : 25px;
+    overflow: hidden;
+    @extend .user-select;
+    .qty-increase {
+        float : right;
+        line-height: 25px;
+        border-left: 1px solid #ccc;
+        padding: 0px 3px;
+        cursor: pointer;
+        background-color: #337ab7;
+        &:before {
+            font-family: FontAwesome;
+            content: '\f067';
+            color : white;
+        }
+    }
+    .qty-decrease {
+        float: left;
+        line-height: 25px;
+        border-right: 1px solid #ccc;
+        padding: 0px 3px;
+        cursor: pointer;
+        background-color: #337ab7;
+        &:before {
+            font-family: FontAwesome;
+            content: '\f068';
+            color : white;
+        }
+    }
+    .qty-edit {
+        width: 60px;
+        height: 25px;
+        border: 0px;
+        margin: auto;
+        text-align: center;
+    }
+}

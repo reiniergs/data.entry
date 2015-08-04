@@ -1,5 +1,6 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.DATA_ENTRY = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var $ = require('jquery');
+        require('./jquery.plugins/qty');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var datepicker = require('../vendor/bootstrap-datepicker/js/bootstrap-datepicker');
@@ -15,6 +16,9 @@ var manageOrderView = Backbone.View.extend({
     },
     render : function () {
         this.$el.html(template({ name : 'Saray'}));
+        this.$('.qty-comp').qty({
+            initValue : 10
+        })
         this.trigger('rendered');
         return this;
     },
@@ -29,14 +33,46 @@ var manageOrderView = Backbone.View.extend({
 
 
 module.exports = manageOrderView;
-},{"../vendor/bootstrap-datepicker/js/bootstrap-datepicker":3,"./templates/purchase_order.html":2,"backbone":4,"bootstrap":5,"jquery":27,"moment":28,"underscore":29}],2:[function(require,module,exports){
+},{"../vendor/bootstrap-datepicker/js/bootstrap-datepicker":4,"./jquery.plugins/qty":2,"./templates/purchase_order.html":3,"backbone":5,"bootstrap":6,"jquery":28,"moment":29,"underscore":30}],2:[function(require,module,exports){
+var $ = require('jquery');
+
+$.fn.qty = function (options) {
+    var initOptions = options || {};
+    var initValue = options.initValue || 0;
+    this.each(function (index,node) {
+        var edit = $(node).find('.qty-edit');
+        var increase = $(node).find('.qty-increase');
+        var decrease = $(node).find('.qty-decrease');
+        edit.val(initValue);
+
+        /* validation only number */
+        edit.on('input',function (e) {
+            e.target.value = e.target.value.replace(/\D/g,'');
+        });
+
+        increase.on('click',function (e) {
+           edit.val(+edit.val() + 1);
+        });
+
+        decrease.on('click',function (e) {
+            if (edit.val() > 0)
+            edit.val(+edit.val() - 1);
+        });
+
+
+    });
+
+    return this;
+}
+
+},{"jquery":28}],3:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div class=\"panel panel-primary\">\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">New Purchase Order</h3>\n    </div>\n    <div class=\"panel-body\">\n        <form>\n            <div class=\"form-group\">\n                <div class=\"date-container\">\n                    <label for=\"order-date\">Date</label>\n                    <div class=\"app-datepicker\">\n                        <input type=\"text\" class=\"form-control\" id=\"order-date\">\n                        <i class=\"fa fa-calendar\"></i>\n                    </div>\n                </div>\n                <div class=\"site-container\">\n                    <label for=\"order-site\">Site:</label>\n                    <select id=\"order-site\" class=\"site-select\">\n                        <option>Publix</option>\n                        <option>Startbucks</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"order-note\">PO Note:</label>\n                <textarea id=\"order-note\" class=\"form-control\" rows=\"3\"></textarea>\n            </div>\n        </form>\n    </div>\n    <div class=\"summary-container\">\n        <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n                <b>Site total budget:</b>\n                <span class=\"right\">$4,000</span>\n            </li>\n            <li class=\"list-group-item\">\n                <b>Site budget available :</b>\n                <span class=\"right\">$4,000</span>\n            </li>\n            <li class=\"list-group-item\">\n                <b>Overbudget amount:</b>\n                <span class=\"right\">$4,000</span>\n            </li>\n        </ul>\n    </div>\n    <div class=\"toolbar\">\n        <div class=\"right\">\n            <b>Grand Total:</b> $2,000\n        </div>\n        <div class=\"form-group\">\n            <div class=\"filter-container\">\n                <input type=\"text\" class=\"form-control\" id=\"filter-top\" placeholder=\"type to filter\">\n                <i class=\"fa fa-search\"></i>\n            </div>\n        </div>\n    </div>\n    <table class=\"table\">\n        <thead>\n            <tr>\n                <td><b>Line #</b></td>\n                <td><b>Item number</b></td>\n                <td><b>Item description</b></td>\n                <td><b>UofM</b></td>\n                <td><b>Qty</b></td>\n                <td><b>Unit price</b></td>\n                <td><b>Extended price</b></td>\n                <td></td>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>1</td>\n                <td>BUS250</td>\n                <td>Tim L. Conley TSC Appply Online 250 pk</td>\n                <td>\n                    <select>\n                        <option>EA</option>\n                        <option>Other</option>\n                    </select>\n                </td>\n                <td>Component</td>\n                <td>$ 45.00</td>\n                <td>0.00</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>2</td>\n                <td>BUS250</td>\n                <td>Tim L. Conley TSC Appply Online 250 pk</td>\n                <td>\n                    <select>\n                        <option>EA</option>\n                        <option>Other</option>\n                    </select>\n                </td>\n                <td>Component</td>\n                <td>$ 45.00</td>\n                <td>0.00</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>3</td>\n                <td>BUS250</td>\n                <td>Tim L. Conley TSC Appply Online 250 pk</td>\n                <td>\n                    <select>\n                        <option>EA</option>\n                        <option>Other</option>\n                    </select>\n                </td>\n                <td>Component</td>\n                <td>$ 45.00</td>\n                <td>0.00</td>\n                <td></td>\n            </tr>\n        </tbody>\n    </table>\n    <div class=\"toolbar\">\n        <div class=\"right\">\n            <b>Grand Total:</b> $2,000\n        </div>\n        <div>\n            <!-- Standard button -->\n            <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">\n                Add more items\n            </button>\n        </div>\n    </div>\n    <hr style=\"clear : both; margin-top: 15px\"/>\n    <div class=\"btn-container\">\n        <!-- Standard button -->\n        <button type=\"button\" class=\"btn btn-default\">Save</button>\n\n        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->\n        <button type=\"button\" class=\"btn btn-primary\">Save & Continue</button>\n    </div>\n</div>\n\n<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n                <h4 class=\"modal-title\" id=\"myModalLabel\">Add new item</h4>\n            </div>\n            <div class=\"modal-body\">\n                add more items form, under construction \n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n                <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n            </div>\n        </div>\n    </div>\n</div>\n";
+    return "<div class=\"panel panel-primary\">\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">New Purchase Order</h3>\n    </div>\n    <div class=\"panel-body\">\n        <form>\n            <div class=\"form-group\">\n                <div class=\"date-container\">\n                    <label for=\"order-date\">Date</label>\n\n                    <div class=\"app-datepicker\">\n                        <input type=\"text\" class=\"form-control\" id=\"order-date\">\n                        <i class=\"fa fa-calendar\"></i>\n                    </div>\n                </div>\n                <div class=\"site-container\">\n                    <label for=\"order-site\">Site:</label>\n                    <select id=\"order-site\" class=\"site-select\">\n                        <option>Publix</option>\n                        <option>Startbucks</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"order-note\">PO Note:</label>\n                <textarea id=\"order-note\" class=\"form-control\" rows=\"3\"></textarea>\n            </div>\n        </form>\n    </div>\n    <div class=\"summary-container\">\n        <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n                <b>Site total budget:</b>\n                <span class=\"right\">$4,000</span>\n            </li>\n            <li class=\"list-group-item\">\n                <b>Site budget available :</b>\n                <span class=\"right\">$4,000</span>\n            </li>\n            <li class=\"list-group-item\">\n                <b>Overbudget amount:</b>\n                <span class=\"right\">$4,000</span>\n            </li>\n        </ul>\n    </div>\n    <div class=\"toolbar\">\n        <div class=\"right\">\n            <b>Grand Total:</b> $2,000\n        </div>\n        <div class=\"form-group\">\n            <div class=\"filter-container\">\n                <input type=\"text\" class=\"form-control\" id=\"filter-top\" placeholder=\"type to filter\">\n                <i class=\"fa fa-search\"></i>\n            </div>\n        </div>\n    </div>\n    <table class=\"table\">\n        <thead>\n        <tr>\n            <td><b>Line #</b></td>\n            <td><b>Item number</b></td>\n            <td><b>Item description</b></td>\n            <td><b>UofM</b></td>\n            <td><b>Qty</b></td>\n            <td><b>Unit price</b></td>\n            <td><b>Extended price</b></td>\n            <td></td>\n        </tr>\n        </thead>\n        <tbody>\n        <tr>\n            <td>1</td>\n            <td>BUS250</td>\n            <td>Tim L. Conley TSC Appply Online 250 pk</td>\n            <td>\n                <select>\n                    <option>EA</option>\n                    <option>Other</option>\n                </select>\n            </td>\n            <td>\n                <div class=\"qty-comp\">\n                    <span class=\"qty-decrease\"></span>\n                    <span class=\"qty-increase\"></span>\n                    <input class=\"qty-edit\" type=\"text\"/>\n                </div>\n            </td>\n            <td>$ 45.00</td>\n            <td>0.00</td>\n            <td></td>\n        </tr>\n        <tr>\n            <td>2</td>\n            <td>BUS250</td>\n            <td>Tim L. Conley TSC Appply Online 250 pk</td>\n            <td>\n                <select>\n                    <option>EA</option>\n                    <option>Other</option>\n                </select>\n            </td>\n            <td>\n                <div class=\"qty-comp\">\n                    <span class=\"qty-decrease\"></span>\n                    <span class=\"qty-increase\"></span>\n                    <input class=\"qty-edit\" type=\"text\"/>\n                </div>\n            </td>\n            <td>$ 45.00</td>\n            <td>0.00</td>\n            <td></td>\n        </tr>\n        <tr>\n            <td>3</td>\n            <td>BUS250</td>\n            <td>Tim L. Conley TSC Appply Online 250 pk</td>\n            <td>\n                <select>\n                    <option>EA</option>\n                    <option>Other</option>\n                </select>\n            </td>\n            <td>\n                <div class=\"qty-comp\">\n                    <span class=\"qty-decrease\"></span>\n                    <span class=\"qty-increase\"></span>\n                    <input class=\"qty-edit\" type=\"text\"/>\n                </div>\n            </td>\n            <td>$ 45.00</td>\n            <td>0.00</td>\n            <td></td>\n        </tr>\n        </tbody>\n    </table>\n    <div class=\"toolbar\">\n        <div class=\"right\">\n            <b>Grand Total:</b> $2,000\n        </div>\n        <div>\n            <!-- Standard button -->\n            <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#myModal\">\n                Add more items\n            </button>\n        </div>\n    </div>\n    <hr style=\"clear : both; margin-top: 15px\"/>\n    <div class=\"btn-container\">\n        <!-- Standard button -->\n        <button type=\"button\" class=\"btn btn-default\">Save</button>\n\n        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->\n        <button type=\"button\" class=\"btn btn-primary\">Save & Continue</button>\n    </div>\n</div>\n\n<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\n    <div class=\"modal-dialog\" role=\"document\">\n        <div class=\"modal-content\">\n            <form>\n                <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span\n                            aria-hidden=\"true\">&times;</span></button>\n                    <h4 class=\"modal-title\" id=\"myModalLabel\">Add new item</h4>\n                </div>\n                <div class=\"modal-body\">\n                    <div class=\"form-group\">\n                        <label for=\"item-number\">Item number</label>\n                        <input type=\"text\" class=\"form-control\" id=\"item-number\" placeholder=\"\">\n                    </div>\n                    <div class=\"form-group\">\n                        <label for=\"item-number\">Item description</label>\n                        <textarea type=\"text\" class=\"form-control\" id=\"item-description\"></textarea>\n                    </div>\n                    <div class=\"form-group\">\n                        <label for=\"item-uofm\">UofM</label>\n                        <select class=\"form-control\" id=\"item-uofm\">\n                            <option>EA</option>\n                        </select>\n                    </div>\n                    <div class=\"form-group\">\n                        <label>Qty</label>\n                        <div class=\"qty-comp\">\n                            <span class=\"qty-decrease\"></span>\n                            <span class=\"qty-increase\"></span>\n                            <input class=\"qty-edit\" type=\"text\"/>\n                        </div>\n                    </div>\n                    <div class=\"form-group\">\n                        <label for=\"item-price\">Unit price</label>\n                        <input type=\"text\" class=\"form-control\" id=\"item-price\" value=\"0.00\">\n                    </div>\n                    <div class=\"form-group\">\n                        <label>Extended price</label>\n                        <h3 class=\"total-price\">0.00</h3>\n                    </div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n                    <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n";
 },"useData":true});
 
-},{"hbsfy/runtime":26}],3:[function(require,module,exports){
+},{"hbsfy/runtime":27}],4:[function(require,module,exports){
 /*!
  * Datepicker for Bootstrap v1.4.0 (https://github.com/eternicode/bootstrap-datepicker)
  *
@@ -1820,7 +1856,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 
 }(window.jQuery));
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 (function (global){
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Backbone.js 1.2.1
@@ -3702,7 +3738,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 // This file is autogenerated via the `commonjs` Grunt task. You can require() this file in a CommonJS environment.
 require('../../js/transition.js')
 require('../../js/alert.js')
@@ -3716,7 +3752,7 @@ require('../../js/popover.js')
 require('../../js/scrollspy.js')
 require('../../js/tab.js')
 require('../../js/affix.js')
-},{"../../js/affix.js":6,"../../js/alert.js":7,"../../js/button.js":8,"../../js/carousel.js":9,"../../js/collapse.js":10,"../../js/dropdown.js":11,"../../js/modal.js":12,"../../js/popover.js":13,"../../js/scrollspy.js":14,"../../js/tab.js":15,"../../js/tooltip.js":16,"../../js/transition.js":17}],6:[function(require,module,exports){
+},{"../../js/affix.js":7,"../../js/alert.js":8,"../../js/button.js":9,"../../js/carousel.js":10,"../../js/collapse.js":11,"../../js/dropdown.js":12,"../../js/modal.js":13,"../../js/popover.js":14,"../../js/scrollspy.js":15,"../../js/tab.js":16,"../../js/tooltip.js":17,"../../js/transition.js":18}],7:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: affix.js v3.3.5
  * http://getbootstrap.com/javascript/#affix
@@ -3880,7 +3916,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: alert.js v3.3.5
  * http://getbootstrap.com/javascript/#alerts
@@ -3976,7 +4012,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: button.js v3.3.5
  * http://getbootstrap.com/javascript/#buttons
@@ -4098,7 +4134,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: carousel.js v3.3.5
  * http://getbootstrap.com/javascript/#carousel
@@ -4337,7 +4373,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: collapse.js v3.3.5
  * http://getbootstrap.com/javascript/#collapse
@@ -4550,7 +4586,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: dropdown.js v3.3.5
  * http://getbootstrap.com/javascript/#dropdowns
@@ -4717,7 +4753,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: modal.js v3.3.5
  * http://getbootstrap.com/javascript/#modals
@@ -5056,7 +5092,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: popover.js v3.3.5
  * http://getbootstrap.com/javascript/#popovers
@@ -5166,7 +5202,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: scrollspy.js v3.3.5
  * http://getbootstrap.com/javascript/#scrollspy
@@ -5340,7 +5376,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: tab.js v3.3.5
  * http://getbootstrap.com/javascript/#tabs
@@ -5497,7 +5533,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: tooltip.js v3.3.5
  * http://getbootstrap.com/javascript/#tooltip
@@ -6013,7 +6049,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: transition.js v3.3.5
  * http://getbootstrap.com/javascript/#transitions
@@ -6074,7 +6110,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
@@ -6135,7 +6171,7 @@ inst['default'] = inst;
 
 exports['default'] = inst;
 module.exports = exports['default'];
-},{"./handlebars/base":19,"./handlebars/exception":20,"./handlebars/no-conflict":21,"./handlebars/runtime":22,"./handlebars/safe-string":23,"./handlebars/utils":24}],19:[function(require,module,exports){
+},{"./handlebars/base":20,"./handlebars/exception":21,"./handlebars/no-conflict":22,"./handlebars/runtime":23,"./handlebars/safe-string":24,"./handlebars/utils":25}],20:[function(require,module,exports){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
@@ -6409,7 +6445,7 @@ function createFrame(object) {
 }
 
 /* [args, ]options */
-},{"./exception":20,"./utils":24}],20:[function(require,module,exports){
+},{"./exception":21,"./utils":25}],21:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -6448,7 +6484,7 @@ Exception.prototype = new Error();
 
 exports['default'] = Exception;
 module.exports = exports['default'];
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -6469,7 +6505,7 @@ exports['default'] = function (Handlebars) {
 
 module.exports = exports['default'];
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
@@ -6702,7 +6738,7 @@ function initData(context, data) {
   }
   return data;
 }
-},{"./base":19,"./exception":20,"./utils":24}],23:[function(require,module,exports){
+},{"./base":20,"./exception":21,"./utils":25}],24:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -6717,7 +6753,7 @@ SafeString.prototype.toString = SafeString.prototype.toHTML = function () {
 
 exports['default'] = SafeString;
 module.exports = exports['default'];
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -6832,15 +6868,15 @@ function blockParams(params, ids) {
 function appendContextPath(contextPath, id) {
   return (contextPath ? contextPath + '.' : '') + id;
 }
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 // Create a simple path alias to allow browserify to resolve
 // the runtime on a supported path.
 module.exports = require('./dist/cjs/handlebars.runtime')['default'];
 
-},{"./dist/cjs/handlebars.runtime":18}],26:[function(require,module,exports){
+},{"./dist/cjs/handlebars.runtime":19}],27:[function(require,module,exports){
 module.exports = require("handlebars/runtime")["default"];
 
-},{"handlebars/runtime":25}],27:[function(require,module,exports){
+},{"handlebars/runtime":26}],28:[function(require,module,exports){
 (function (global){
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -16059,7 +16095,7 @@ return jQuery;
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.5
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -19255,7 +19291,7 @@ return jQuery;
     return _moment;
 
 }));
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function (global){
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Underscore.js 1.8.3
